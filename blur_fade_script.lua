@@ -1,16 +1,15 @@
--- Blur Fade Script
+-- Create a blur effect that is active when joining and fades out after 3 seconds without a black screen.
 
-local Players = game:GetService('Players')
-local StarterGui = game:GetService('StarterGui')
+local Player = game.Players.LocalPlayer
+local BlurEffect = Instance.new('BlurEffect', game.Lighting)
+BlurEffect.Size = 0 -- Start with no blur
 
--- Function to blur the screen
-local function blurScreen()
-    StarterGui:SetCore('ScreenFade', {FadeTime = 1, FadeColor = Color3.new(1, 1, 1)})
-    wait(1)
-    StarterGui:SetCore('ScreenFade', {FadeTime = 1, FadeColor = Color3.new(0, 0, 0)})
+-- Function to set the blur effect
+local function setBlurEffect() 
+    BlurEffect.Size = 10 -- Maximum blur
+    wait(3) -- Wait for 3 seconds
+    BlurEffect.Size = 0 -- Fade out the blur
 end
 
--- Connect the function to the PlayerAdded event
-Players.PlayerAdded:Connect(function()
-    blurScreen()
-end)
+-- Trigger the blur effect when the player joins
+Player.CharacterAdded:Connect(setBlurEffect)
